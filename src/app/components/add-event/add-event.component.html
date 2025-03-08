@@ -1,0 +1,31 @@
+<form [formGroup]="eventForm" >
+    <label>Titre</label>
+    <input type="text" class="form-control" placeholder="Nom de l'Event" formControlName="titre">
+    <div *ngIf="eventForm.controls['titre'].invalid && eventForm.controls['titre'].touched" class="alert alert-danger">
+      <p *ngIf="eventForm.controls['titre'].hasError('required')">Le titre est obligatoire</p>
+    </div>
+  
+    <label>Description</label>
+    <input type="text" class="form-control" placeholder="Description" formControlName="description">
+    <div *ngIf="eventForm.controls['description'].invalid && eventForm.controls['description'].touched" class="alert alert-danger">
+      <p *ngIf="eventForm.controls['description'].hasError('minlength')">Description doit contenir au moins 10 caractères</p>
+    </div>
+  
+    <label>lieu</label>
+    <input type="text" class="form-control" placeholder="Lieu" formControlName="lieu">
+  
+    <label>date</label>
+    <input type="date" class="form-control" placeholder="Date" formControlName="date">
+  
+    <label>Disponible:</label>
+    <input type="checkbox" formControlName="disponible" />
+  
+    <label>nbrMax</label>
+    <input type="number" class="form-control" placeholder="Nombre max des participants" formControlName="nbrMax">
+    <p *ngIf="eventForm.get('nbrMax')?.hasError('min') && eventForm.get('nbrMax')?.touched" class="alert alert-danger">
+      Le nombre maximum doit être un nombre positif.
+    </p>
+  
+    <button class="btn btn-primary mt-3" type="submit" [disabled]="eventForm.invalid" (click)="save()">Enregistrer</button>
+  </form>
+  

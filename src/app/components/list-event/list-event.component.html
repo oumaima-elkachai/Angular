@@ -1,0 +1,49 @@
+<p>list-event works!</p>
+<button routerLink="/addEvent" class="btn btn-primary mb-3">Add Event</button>
+
+<!-- Champ de recherche -->
+<p>Recherche</p>
+<input 
+  type="text" 
+  placeholder="Rechercher par lieu ou date" 
+  class="form-control mb-3" 
+  [(ngModel)]="searchTerm" 
+  (input)="filterEvents()" 
+/>
+
+<ul class="list-group">
+  <li *ngFor="let t of filteredEvents; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+      
+    <div>
+      <h5 class="mb-1"><strong>{{ t.titre }}</strong></h5>
+      <p class="mb-1">{{ t.description }}</p>
+    </div>
+    
+    <div>
+      <p class="mb-1"><strong>Lieu :</strong> {{ t.lieu }}</p>
+      <p class="mb-1"><strong>Date :</strong> {{ t.date }}</p>
+    </div>
+    
+    <div>
+      <p class="mb-1"><strong>Disponible :</strong> {{ t.disponible ? 'Oui' : 'Non' }}</p>
+      <p class="mb-1"><strong>Max Participants :</strong> {{ t.nbrMax }}</p>
+    </div>
+
+    <div>
+      <button class="btn btn-danger me-2" (click)="supp(t.id)" [disabled]="t.disponible">
+        Supprimer
+      </button>
+      <button class="btn btn-warning" [routerLink]="['/update', t.id]">
+        Modifier
+      </button>
+    </div>
+
+  </li>
+</ul>
+
+<button class="btn btn-primary mt-3" (click)="totalDisponibles = getTotalDisponibles()">
+    Calculer Événements Disponibles
+  </button>
+  
+  <p *ngIf="totalDisponibles !== null" class="mt-2">Total des événements disponibles : {{ totalDisponibles }}</p>
+  
